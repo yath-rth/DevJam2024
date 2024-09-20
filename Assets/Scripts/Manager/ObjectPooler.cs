@@ -5,23 +5,23 @@ using UnityEngine;
 [DefaultExecutionOrder(-1)]
 public class ObjectPooler : MonoBehaviour
 {
-    public static ObjectPooler instance;
+    public static ObjectPooler pool;
 
     public List<objectPoolItems> items;
 
     private void OnDestroy()
     {
-        if (instance == this)
+        if (pool == this)
         {
-            instance = null;
+            pool = null;
         }
     }
 
     private void Awake()
     {
-        if (instance != null) Destroy(instance.gameObject);
+        if (pool != null) Destroy(pool.gameObject);
 
-        instance = this;
+        pool = this;
         DontDestroyOnLoad(this.gameObject);
 
         for (int i = 0; i < items.Count; i++)
@@ -42,8 +42,6 @@ public class ObjectPooler : MonoBehaviour
 
     public GameObject GetObject(int i)
     {
-        i -= 1;
-
         if (items[i].objectPool.Count > 0)
         {
             GameObject obj = items[i].objectPool.Dequeue();
@@ -60,8 +58,6 @@ public class ObjectPooler : MonoBehaviour
 
     public void ReturnObject(GameObject obj, int i)
     {
-        i -= 1;
-
         items[i].objectPool.Enqueue(obj);
         obj.SetActive(false);
     }
