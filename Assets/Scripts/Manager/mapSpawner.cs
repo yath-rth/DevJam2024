@@ -11,7 +11,7 @@ public class mapSpawner : MonoBehaviour
 
     Vector2 mapsize;
     Vector2 Maxmapsize = new Vector2(12, 12);
-    public GameObject tile, coll, camPos, healthBar, ammoBar, staminaBar;
+    public GameObject tile, spawner, coll, camPos, healthBar, ammoBar, staminaBar;
     [Range(0, 50)]
     public int maxSizeX, maxSizeY, minSizeX, minSizeY;
     [Range(-2, 2)]
@@ -19,7 +19,7 @@ public class mapSpawner : MonoBehaviour
     [Range(-5f, 5f)]
     public float tileSize = 1f, healthBarOffset, ammoBarOffset, staminaBarOffset, otherBarOffsetY;
     [Range(0, 20f)] public float otherBarOffsetX;
-    [SerializeField]List<GameObject> obstacles = new List<GameObject>();
+    [SerializeField] List<GameObject> obstacles = new List<GameObject>();
 
     Color foregroundColor;
     Color backgroundColor;
@@ -27,7 +27,7 @@ public class mapSpawner : MonoBehaviour
     [SerializeField] Cinemachine.CinemachineVirtualCamera cam;
 
     [HideInInspector]
-    public List<GameObject> positions;
+    public List<GameObject> positions, spawnPos;
 
     List<Transform> mapBlockers;
 
@@ -85,22 +85,63 @@ public class mapSpawner : MonoBehaviour
         {
             for (int y = 0; y < mapsize.y; y++)
             {
-                Vector3 tilePosition = CoordToPosition(x, y);
-                GameObject newTile = Instantiate(tile, tilePosition, tile.transform.rotation);
+                if (x == 0 || x == mapsize.x - 1)
+                {
+                    Vector3 tilePosition = CoordToPosition(x, y);
+                    GameObject newTile = Instantiate(spawner, tilePosition, tile.transform.rotation);
 
-                positions.Add(newTile);
+                    spawnPos.Add(newTile);
 
-                newTile.transform.parent = mapHolder;
-                newTile.transform.localScale = new Vector3(1 * (1 - outlinePercent) * -tileSize, (1 - outlinePercent) * -tileSize * tileHeight, 1 * (1 - outlinePercent) * -tileSize);
+                    newTile.transform.parent = mapHolder;
+                    newTile.transform.localScale = new Vector3(1 * (1 - outlinePercent) * -tileSize, (1 - outlinePercent) * -tileSize * tileHeight, 1 * (1 - outlinePercent) * -tileSize);
 
-                //tileScripts.Add(newTile.GetComponent<Tile>());
+                    //tileScripts.Add(newTile.GetComponent<Tile>());
 
-                Renderer obstacleRenderer = newTile.GetComponent<Renderer>();
-                Material obstacleMaterial = new Material(obstacleRenderer.sharedMaterial);
-                float colourPercent = x / (float)mapsize.x;
-                obstacleMaterial.SetColor("_color", Color.Lerp(foregroundColor, backgroundColor, colourPercent));
-                obstacleRenderer.sharedMaterial = obstacleMaterial;
+                    Renderer obstacleRenderer = newTile.GetComponent<Renderer>();
+                    Material obstacleMaterial = new Material(obstacleRenderer.sharedMaterial);
+                    float colourPercent = x / (float)mapsize.x;
+                    obstacleMaterial.SetColor("_color", Color.Lerp(foregroundColor, backgroundColor, colourPercent));
+                    obstacleRenderer.sharedMaterial = obstacleMaterial;
+                }
+                else if (x != 0 && x != mapsize.x-1)
+                {
+                    if (y == 0 || y == mapsize.y-1)
+                    {
+                        Vector3 tilePosition = CoordToPosition(x, y);
+                        GameObject newTile = Instantiate(spawner, tilePosition, tile.transform.rotation);
 
+                        spawnPos.Add(newTile);
+
+                        newTile.transform.parent = mapHolder;
+                        newTile.transform.localScale = new Vector3(1 * (1 - outlinePercent) * -tileSize, (1 - outlinePercent) * -tileSize * tileHeight, 1 * (1 - outlinePercent) * -tileSize);
+
+                        //tileScripts.Add(newTile.GetComponent<Tile>());
+
+                        Renderer obstacleRenderer = newTile.GetComponent<Renderer>();
+                        Material obstacleMaterial = new Material(obstacleRenderer.sharedMaterial);
+                        float colourPercent = x / (float)mapsize.x;
+                        obstacleMaterial.SetColor("_color", Color.Lerp(foregroundColor, backgroundColor, colourPercent));
+                        obstacleRenderer.sharedMaterial = obstacleMaterial;
+                    }
+                    else
+                    {
+                        Vector3 tilePosition = CoordToPosition(x, y);
+                        GameObject newTile = Instantiate(tile, tilePosition, tile.transform.rotation);
+
+                        positions.Add(newTile);
+
+                        newTile.transform.parent = mapHolder;
+                        newTile.transform.localScale = new Vector3(1 * (1 - outlinePercent) * -tileSize, (1 - outlinePercent) * -tileSize * tileHeight, 1 * (1 - outlinePercent) * -tileSize);
+
+                        //tileScripts.Add(newTile.GetComponent<Tile>());
+
+                        Renderer obstacleRenderer = newTile.GetComponent<Renderer>();
+                        Material obstacleMaterial = new Material(obstacleRenderer.sharedMaterial);
+                        float colourPercent = x / (float)mapsize.x;
+                        obstacleMaterial.SetColor("_color", Color.Lerp(foregroundColor, backgroundColor, colourPercent));
+                        obstacleRenderer.sharedMaterial = obstacleMaterial;
+                    }
+                }
             }
         }
 
@@ -115,13 +156,15 @@ public class mapSpawner : MonoBehaviour
         target.weight = 1;
         target.radius = 0;
 
-        for(int i = 0; i < positions.Count; i++){
-            float a = Random.Range(0f,1f);
-            if (a > 0.95f){
+        for (int i = 0; i < positions.Count; i++)
+        {
+            float a = Random.Range(0f, 1f);
+            if (a > 0.95f)
+            {
                 GameObject obstacle = Instantiate(obstacles[Random.Range(0, obstacles.Count)], positions[i].transform.position, positions[i].transform.rotation);
-                obstacle.transform.eulerAngles = new Vector3(0, Random.Range(0f,360), 0);
+                obstacle.transform.eulerAngles = new Vector3(0, Random.Range(0f, 360), 0);
                 obstacle.transform.parent = mapHolder;
-                obstacle.transform.localScale = new Vector3(1 * (1 - outlinePercent) * -tileSize, (1 - outlinePercent) * tileSize * Random.Range(obstacleHeight/2, obstacleHeight), 1 * (1 - outlinePercent) * -tileSize);
+                obstacle.transform.localScale = new Vector3(1 * (1 - outlinePercent) * -tileSize, (1 - outlinePercent) * tileSize * Random.Range(obstacleHeight / 2, obstacleHeight), 1 * (1 - outlinePercent) * -tileSize);
             }
         }
 

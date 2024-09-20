@@ -16,12 +16,7 @@ public class ParticleSystems : MonoBehaviour
     {
         if (playerMovement.movementWSAD.magnitude > 0.1)
         {
-            particles[2].transform.rotation = transform.rotation * Quaternion.Euler(0, 180, 0);
+            particles[0].transform.rotation = transform.rotation * Quaternion.Euler(0, 180, 0);
         }
-    }
-
-    public void ParticleSetActive(int index, bool val)
-    {
-        particles[index].gameObject.SetActive(val);
     }
 }

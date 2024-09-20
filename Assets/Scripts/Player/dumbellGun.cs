@@ -18,17 +18,21 @@ public class dumbellGun : MonoBehaviour
         {
             if (fov.closestTarget != null)
             {
-                pos = (fov.closestTarget.position - transform.position).normalized;
-                pos.y = 0;
+                pos = fov.closestTarget.position;
+                pos.y = spawn_point.position.y;
             }
             else
             {
-                pos = transform.forward;
+                pos = spawn_point.parent.transform.forward;
             }
+
+            spawn_point.LookAt(pos);
 
             dumbell_obj = ObjectPooler.pool.GetObject(0);
             dumbell_obj.transform.position = spawn_point.position;
-            dumbell_obj.GetComponent<Rigidbody>().AddForce(pos * speed, ForceMode.Impulse);
+            dumbell_obj.transform.rotation = spawn_point.parent.rotation;
+
+            dumbell_obj.GetComponent<Rigidbody>().AddForce(spawn_point.forward * speed, ForceMode.Impulse);
             StartCoroutine(dumbell_obj.GetComponent<poolObject>().despawn());
 
             timeRn = Time.time + timeBtwShot;
