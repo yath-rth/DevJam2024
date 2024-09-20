@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [Range(1, 50)]
     [SerializeField] float Speed = 5;
     [HideInInspector]
-    public Vector3 movementWSAD, move;
+    public Vector3 movementWSAD, move, temp;
     Rigidbody rb;
     Animator am;
     [HideInInspector]
@@ -41,18 +41,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!playerStats.IsDead){
-            move = new Vector3(movementWSAD.normalized.x * Speed * Time.deltaTime, 0, movementWSAD.normalized.z * Speed * Time.deltaTime);
-            move = transform.TransformDirection(move);
+        if (!playerStats.IsDead)
+        {
+            move = new Vector3(movementWSAD.normalized.x, 0, movementWSAD.normalized.z);
+            if (move.magnitude != null)
+            {
+                temp = transform.position + move;
+            }
+            transform.LookAt(temp);
+
+            move = transform.forward * Speed * Time.deltaTime * movementWSAD.normalized.magnitude;
 
             rb.MovePosition(move + transform.position);
 
             if (am != null)
             {
-                am.SetFloat("horizontal", movementWSAD.x);
-                am.SetFloat("vertical", movementWSAD.z);
+                //am.SetFloat("horizontal", movementWSAD.x);
+                am.SetFloat("vertical", movementWSAD.normalized.magnitude);
 
-                if(inputActions.Gameplay.Dash.ReadValue<float>() > 0 && movementWSAD.magnitude > 0)
+                if (inputActions.Gameplay.Dash.ReadValue<float>() > 0 && movementWSAD.magnitude > 0)
                 {
                     am.SetLayerWeight(2, 1);
                 }
@@ -66,9 +73,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if(!playerStats.IsDead){
+        if (!playerStats.IsDead)
+        {
             angle = transform.rotation.y;
-            if(shouldRotate) {Rotate();} 
+            if (shouldRotate) { Rotate(); }
 
             Vector2 MovementInput = inputActions.Gameplay.Movement.ReadValue<Vector2>();
             mousePos = inputActions.Gameplay.Rotation.ReadValue<Vector2>();

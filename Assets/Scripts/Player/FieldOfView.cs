@@ -43,7 +43,6 @@ public class FieldOfView : MonoBehaviour
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
             Transform target = targetsInViewRadius[i].transform;
-            if (target != null) target.GetComponentInChildren<MeshRenderer>().material.SetColor("_color", Color.white);
             Vector3 dirToTarget = (target.position - transform.position).normalized;
 
             if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
@@ -55,8 +54,6 @@ public class FieldOfView : MonoBehaviour
                 {
                     closestDistanceSqr = dstToTarget;
                     closestTarget = target;
-
-                    closestTarget.GetComponentInChildren<MeshRenderer>().material.SetColor("_color", Color.red);
                 }
             }
         }

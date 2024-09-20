@@ -14,7 +14,7 @@ public class mapSpawner : MonoBehaviour
     public GameObject tile, coll, camPos, healthBar, ammoBar, staminaBar;
     [Range(0, 50)]
     public int maxSizeX, maxSizeY, minSizeX, minSizeY;
-    [Range(0, 2)]
+    [Range(-2, 2)]
     public float outlinePercent, tileHeight = 1f, camOffset, obstacleHeight;
     [Range(-5f, 5f)]
     public float tileSize = 1f, healthBarOffset, ammoBarOffset, staminaBarOffset, otherBarOffsetY;
@@ -119,8 +119,9 @@ public class mapSpawner : MonoBehaviour
             float a = Random.Range(0f,1f);
             if (a > 0.95f){
                 GameObject obstacle = Instantiate(obstacles[Random.Range(0, obstacles.Count)], positions[i].transform.position, positions[i].transform.rotation);
+                obstacle.transform.eulerAngles = new Vector3(0, Random.Range(0f,360), 0);
                 obstacle.transform.parent = mapHolder;
-                obstacle.transform.localScale = new Vector3(1 * (1 - outlinePercent) * -tileSize, (1 - outlinePercent) * -tileSize * obstacleHeight, 1 * (1 - outlinePercent) * -tileSize);
+                obstacle.transform.localScale = new Vector3(1 * (1 - outlinePercent) * -tileSize, (1 - outlinePercent) * tileSize * Random.Range(obstacleHeight/2, obstacleHeight), 1 * (1 - outlinePercent) * -tileSize);
             }
         }
 

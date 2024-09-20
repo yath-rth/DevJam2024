@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class dumbellGun : MonoBehaviour
 {
+    [SerializeField] FieldOfView fov;
+    [SerializeField] GameObject dumbell_obj;
     public float timeBtwShot;
     float timeRn;
 
-    private void Update() {
-        if(timeRn < Time.time){
+    private void Update()
+    {
+        if (timeRn < Time.time)
+        {
             timeRn = Time.time + timeBtwShot;
             Debug.Log("Shot");
         }

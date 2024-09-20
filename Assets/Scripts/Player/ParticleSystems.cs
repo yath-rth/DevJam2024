@@ -58,26 +58,9 @@ public class ParticleSystems : MonoBehaviour
             ParticleSetActive(2, false);
         }
 
-        if (playerMovement.movementWSAD.z < -0.5)
-        {
-            particles[2].transform.rotation = transform.rotation * Quaternion.Euler(0, 0, 0);
-        }
-        if (playerMovement.movementWSAD.z > 0.5)
+        if (playerMovement.movementWSAD.magnitude > 0.1)
         {
             particles[2].transform.rotation = transform.rotation * Quaternion.Euler(0, 180, 0);
-        }
-
-        if (playerMovement.movementWSAD.x < -0.5)
-        {
-            particles[2].transform.rotation = transform.rotation * Quaternion.Euler(0, 90, 0);
-        }
-        if (playerMovement.movementWSAD.x > 0.5)
-        {
-            particles[2].transform.rotation = transform.rotation * Quaternion.Euler(0, -90, 0);
-        }
-        if (playerMovement.movementWSAD.magnitude <= 0)
-        {
-            particles[2].transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 
