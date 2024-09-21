@@ -49,9 +49,9 @@ public class stepCounter : MonoBehaviour
         }
     }
 
-    private void OnApplicationFocus(bool focusStatus)
+    private void OnApplicationPause(bool focusStatus)
     {
-        if (focusStatus == false)
+        if (focusStatus)
         {
             if (AndroidStepCounter.current != null)
             {
