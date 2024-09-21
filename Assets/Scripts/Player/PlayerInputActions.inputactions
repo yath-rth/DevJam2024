@@ -24,22 +24,13 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Dash",
+                    "name": "TouchPos",
                     "type": "Value",
-                    "id": "3b11559b-44e4-4799-8667-8673e1a84997",
-                    "expectedControlType": "",
+                    "id": "c8b1ccc7-8d9d-42f9-a178-16f77ef3bc47",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Quick Dash",
-                    "type": "Button",
-                    "id": "6251f84f-b1a7-48ec-be79-5e5de12d7df3",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -121,26 +112,37 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "8577240e-2997-4692-a8b3-cfb6012c5cf3",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "Hold(duration=2,pressPoint=0.01)",
+                    "name": "Touch",
+                    "id": "afe4ad92-27d0-4324-8d37-280bd7838ed4",
+                    "path": "OneModifier",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dash",
-                    "isComposite": false,
+                    "action": "TouchPos",
+                    "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "3a9d4c34-1361-4e59-8488-399b03eab4b6",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "Press(pressPoint=0.01)",
+                    "name": "modifier",
+                    "id": "7142a3a4-b739-4009-925b-6d11f8c97353",
+                    "path": "<Touchscreen>/touch0/press",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Quick Dash",
+                    "action": "TouchPos",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "183fed71-aee7-454f-b864-ded10a9bc4de",
+                    "path": "<Touchscreen>/touch0/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchPos",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

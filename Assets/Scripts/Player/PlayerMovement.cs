@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] Transform joystick;
+
     [Range(1, 50)]
     [SerializeField] float Speed = 5;
     [HideInInspector]

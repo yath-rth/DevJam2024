@@ -6,6 +6,7 @@ public class ChangeColorButton : MonoBehaviour
 {
     changeTshirt changeShirt;
     [SerializeField] int color_index, cost;
+    public bool upgraded;
 
     private void Awake()
     {
@@ -14,10 +15,11 @@ public class ChangeColorButton : MonoBehaviour
 
     public void change()
     {
-        if (stepCounter.instance.steps >= cost)
+        if (stepCounter.instance.steps >= cost && upgraded == false)
         {
             changeShirt.change(color_index);
-            stepCounter.instance.temp_steps += cost;
+            stepCounter.instance.setSteps(cost);
+            upgraded = true;
         }
     }
 }

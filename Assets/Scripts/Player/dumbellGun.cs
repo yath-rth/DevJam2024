@@ -7,11 +7,16 @@ public class dumbellGun : MonoBehaviour
     [SerializeField] FieldOfView fov;
     [SerializeField] Transform spawn_point;
     GameObject dumbell_obj;
-    [Range(0f, 5f)] public float timeBtwShot;
+    [Range(0f, 5f)] public float TimeBtwShot;
+    [HideInInspector] public float timeBtwShot;
     [SerializeField, Range(0f, 1f)] float TimeToDespawn = .5f;
     [SerializeField, Range(0f, 100f)] float speed;
     float timeRn;
     Vector3 pos;
+
+    private void Awake() {
+        timeBtwShot = PlayerPrefs.GetFloat("firerate", TimeBtwShot);
+    }
 
     private void Update()
     {
@@ -26,7 +31,7 @@ public class dumbellGun : MonoBehaviour
                 }
                 else
                 {
-                    pos = spawn_point.parent.transform.forward;
+                    pos = spawn_point.transform.forward;
                 }
 
                 spawn_point.LookAt(pos);

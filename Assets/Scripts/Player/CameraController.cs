@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     Player player;
 
     public float offset;
-    public bool x = false;
+    public bool x = true, z = true, y = true;
 
     void Awake()
     {
@@ -18,9 +18,15 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        if (x == true) pos = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z + offset);
-        else pos = new Vector3(transform.position.x, transform.position.y, player.transform.position.z + offset);
-        
+        if (x == true && y == false && z == true)
+        {
+            pos = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z + offset);
+        }
+        else if (x == true && y == false && z == false)
+        {
+            pos = new Vector3(player.transform.position.x, transform.position.y, transform.position.z);
+        }
+
         transform.position = Vector3.Lerp(transform.position, pos, 1f);
     }
 }

@@ -9,7 +9,7 @@ public class enemySpawner : MonoBehaviour
     [SerializeField] float timeBtwSpawns;
     float timeRn;
     [SerializeField] int waveMultiplier;
-    [SerializeField] GameObject frenchFryEnemy;
+    [SerializeField] List<GameObject> enemies = new List<GameObject>();
     int waveCount, waveNumber = 0, currWaveCount;
 
     private void Update()
@@ -37,6 +37,6 @@ public class enemySpawner : MonoBehaviour
 
     void spawn()
     {
-        GameObject _enemy = Instantiate(frenchFryEnemy, map.spawnPos[Random.Range(0, map.spawnPos.Count)].transform.position, Quaternion.identity);
+        GameObject _enemy = Instantiate(enemies[Random.Range(0, enemies.Count)], map.spawnPos[Random.Range(0, map.spawnPos.Count)].transform.position, Quaternion.identity);
     }
 }

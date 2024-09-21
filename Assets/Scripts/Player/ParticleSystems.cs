@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,9 +15,10 @@ public class ParticleSystems : MonoBehaviour
 
     private void Update()
     {
-        if (playerMovement.movementWSAD.magnitude > 0.1)
+        Debug.Log(playerMovement.movementWSAD.magnitude);
+        if (Math.Abs(playerMovement.movementWSAD.magnitude) > 0.1)
         {
-            particles[0].transform.rotation = transform.rotation * Quaternion.Euler(0, 180, 0);
+            particles[0].transform.rotation = transform.rotation * Quaternion.Euler(0, 0, 0);
         }
     }
 }

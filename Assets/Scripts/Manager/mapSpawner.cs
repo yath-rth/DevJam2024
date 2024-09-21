@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
@@ -8,24 +9,22 @@ public class mapSpawner : MonoBehaviour
     public static mapSpawner Grid;
 
     [SerializeField] GameColorManager colorManager;
+    [SerializeField] GameObject ground;
 
     Vector2 mapsize;
     Vector2 Maxmapsize = new Vector2(12, 12);
     public List<GameObject> tile = new List<GameObject>();
-    [SerializeField] GameObject spawner, coll, camPos, healthBar, ammoBar, staminaBar;
+    [SerializeField] GameObject spawner, spawner_corner, coll;
     [Range(0, 50)]
     public int maxSizeX, maxSizeY, minSizeX, minSizeY;
-    [Range(-2, 2)]
-    public float outlinePercent, tileHeight = 1f, camOffset, obstacleHeight;
+    [Range(-5, 5)]
+    public float outlinePercent, tileHeight = 1f, camOffset, obstacleHeight, spawner_height;
     [Range(-5f, 5f)]
-    public float tileSize = 1f, healthBarOffset, ammoBarOffset, staminaBarOffset, otherBarOffsetY;
-    [Range(0, 20f)] public float otherBarOffsetX;
+    public float tileSize = 1f;
     [SerializeField] List<GameObject> obstacles = new List<GameObject>();
 
     Color foregroundColor;
     Color backgroundColor;
-
-    [SerializeField] Cinemachine.CinemachineVirtualCamera cam;
 
     [HideInInspector]
     public List<GameObject> positions, spawnPos;
@@ -77,7 +76,7 @@ public class mapSpawner : MonoBehaviour
         backgroundColor = colors[0];
         foregroundColor = colors[1];
 
-        mapsize = new Vector2(Random.Range(minSizeX, maxSizeX), Random.Range(minSizeY, maxSizeY));
+        mapsize = new Vector2(UnityEngine.Random.Range(minSizeX, maxSizeX), UnityEngine.Random.Range(minSizeY, maxSizeY));
         Maxmapsize = new Vector2(maxSizeX, maxSizeY);
 
         string holderName = "Generated Map";
@@ -98,40 +97,63 @@ public class mapSpawner : MonoBehaviour
         rotations.Add(-90);
         rotations.Add(180);
 
+        ground.transform.localScale = new Vector3((float)Math.Sqrt(mapsize.x), ground.transform.localScale.y, (float)Math.Sqrt(mapsize.y));
+
         for (int x = 0; x < mapsize.x; x++)
         {
             for (int y = 0; y < mapsize.y; y++)
             {
-                int random_index = Random.Range(0, tile.Count);
-                if ((x == 0 || x == mapsize.x - 1) && spawner != null)
+                GameObject newTile = null;
+                int random_index = UnityEngine.Random.Range(0, tile.Count);
+                if ((x == 0) && spawner != null)
                 {
                     Vector3 tilePosition = CoordToPosition(x, y);
-                    GameObject newTile = Instantiate(spawner, tilePosition, tile[random_index].transform.rotation);
+                    if (x == 0 && y == mapsize.y - 1)
+                    {
+                        newTile = Instantiate(spawner_corner, tilePosition, tile[random_index].transform.rotation);
+                    }
+                    else
+                    {
+                        newTile = Instantiate(spawner, tilePosition, tile[random_index].transform.rotation);
+                    }
+                    newTile.transform.eulerAngles = new Vector3(0, -90, 0);
 
                     spawnPos.Add(newTile);
 
                     newTile.transform.parent = mapHolder;
-                    newTile.transform.localScale = new Vector3(1 * (1 - outlinePercent) * -tileSize, (1 - outlinePercent) * tileSize * tileHeight, 1 * (1 - outlinePercent) * -tileSize);
+                    newTile.transform.localScale = new Vector3(-tileSize, tileSize * spawner_height, -tileSize);
+                }
+                else if (x == mapsize.x - 1 && spawner != null)
+                {
+                    Vector3 tilePosition = CoordToPosition(x, y);
+                    if (x == mapsize.x - 1 && y == mapsize.y - 1)
+                    {
+                        newTile = Instantiate(spawner_corner, tilePosition, tile[random_index].transform.rotation);
+                        newTile.transform.eulerAngles = new Vector3(0, 0, 0);
+                    }
+                    else
+                    {
+                        newTile = Instantiate(spawner, tilePosition, tile[random_index].transform.rotation);
+                        newTile.transform.eulerAngles = new Vector3(0, 90, 0);
+                    }
 
-                    //tileScripts.Add(newTile.GetComponent<Tile>());
+                    spawnPos.Add(newTile);
 
-                    // Renderer obstacleRenderer = newTile.GetComponent<Renderer>();
-                    // Material obstacleMaterial = new Material(obstacleRenderer.sharedMaterial);
-                    // float colourPercent = x / (float)mapsize.x;
-                    // obstacleMaterial.SetColor("_color", Color.Lerp(foregroundColor, backgroundColor, colourPercent));
-                    // obstacleRenderer.sharedMaterial = obstacleMaterial;
+                    newTile.transform.parent = mapHolder;
+                    newTile.transform.localScale = new Vector3(-tileSize, tileSize * spawner_height,-tileSize);
+
                 }
                 else if (x != 0 && x != mapsize.x - 1)
                 {
-                    if ((y == 0 || y == mapsize.y - 1) && spawner != null)
+                    if (y == mapsize.y - 1 && spawner != null)
                     {
                         Vector3 tilePosition = CoordToPosition(x, y);
-                        GameObject newTile = Instantiate(spawner, tilePosition, tile[random_index].transform.rotation);
+                        newTile = Instantiate(spawner, tilePosition, tile[random_index].transform.rotation);
 
                         spawnPos.Add(newTile);
 
                         newTile.transform.parent = mapHolder;
-                        newTile.transform.localScale = new Vector3(1 * (1 - outlinePercent) * -tileSize, (1 - outlinePercent) * tileSize * tileHeight, 1 * (1 - outlinePercent) * -tileSize);
+                        newTile.transform.localScale = new Vector3(-tileSize,tileSize * spawner_height,-tileSize);
 
                         //tileScripts.Add(newTile.GetComponent<Tile>());
 
@@ -144,8 +166,8 @@ public class mapSpawner : MonoBehaviour
                     else
                     {
                         Vector3 tilePosition = CoordToPosition(x, y);
-                        GameObject newTile = Instantiate(tile[random_index], tilePosition, tile[random_index].transform.rotation);
-                        newTile.transform.eulerAngles = new Vector3(newTile.transform.rotation.x, rotations[Random.Range(0, 4)], newTile.transform.rotation.z);
+                        newTile = Instantiate(tile[random_index], tilePosition, tile[random_index].transform.rotation);
+                        newTile.transform.eulerAngles = new Vector3(newTile.transform.rotation.x, rotations[UnityEngine.Random.Range(0, 4)], newTile.transform.rotation.z);
 
                         positions.Add(newTile);
 
@@ -179,13 +201,13 @@ public class mapSpawner : MonoBehaviour
         {
             for (int i = 0; i < positions.Count; i++)
             {
-                float a = Random.Range(0f, 1f);
+                float a = UnityEngine.Random.Range(0f, 1f);
                 if (a > 0.95f)
                 {
-                    GameObject obstacle = Instantiate(obstacles[Random.Range(0, obstacles.Count)], positions[i].transform.position, positions[i].transform.rotation);
-                    obstacle.transform.eulerAngles = new Vector3(0, Random.Range(0f, 360), 0);
+                    GameObject obstacle = Instantiate(obstacles[UnityEngine.Random.Range(0, obstacles.Count)], positions[i].transform.position, positions[i].transform.rotation);
+                    obstacle.transform.eulerAngles = new Vector3(0, UnityEngine.Random.Range(0f, 360), 0);
                     obstacle.transform.parent = mapHolder;
-                    obstacle.transform.localScale = new Vector3(1 * (1 - outlinePercent) * -tileSize, (1 - outlinePercent) * tileSize * Random.Range(obstacleHeight / 2, obstacleHeight), 1 * (1 - outlinePercent) * -tileSize);
+                    obstacle.transform.localScale = new Vector3(1 * (1 - outlinePercent) * -tileSize, (1 - outlinePercent) * tileSize * UnityEngine.Random.Range(obstacleHeight / 2, obstacleHeight), 1 * (1 - outlinePercent) * -tileSize);
                 }
             }
         }
@@ -216,56 +238,10 @@ public class mapSpawner : MonoBehaviour
             mapBlockers.Add(maskTop);
             mapBlockers.Add(maskBottom);
         }
-
-        if (cam != null)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                target.target = Instantiate(camPos, mapBlockers[i].position * camOffset, Quaternion.identity).transform;
-                target.target.parent = mapHolder;
-                targetGroup.m_Targets[i] = target;
-            }
-        }
-
-        if (healthBar != null)
-        {
-            healthBar.transform.position = new Vector3(0, 0, -1 * (((mapsize.y + maxSizeY) / 4f * tileSize) + healthBarOffset));
-            target.target = healthBar.transform;
-            targetGroup.m_Targets[4] = target;
-        }
-
-        if (ammoBar != null)
-        {
-            ammoBar.transform.position = new Vector3(otherBarOffsetX, 0, -1 * (((mapsize.y + maxSizeY) / 4f * tileSize) + healthBarOffset + otherBarOffsetY + ammoBarOffset));
-            target.target = ammoBar.transform;
-            targetGroup.m_Targets[5] = target;
-        }
-
-        if (staminaBar != null)
-        {
-            staminaBar.transform.position = new Vector3(otherBarOffsetX, 0, -1 * (((mapsize.y + maxSizeY) / 4f * tileSize) + healthBarOffset + otherBarOffsetY + ammoBarOffset + staminaBarOffset));
-            target.target = staminaBar.transform;
-            targetGroup.m_Targets[6] = target;
-        }
-
-        if (cam != null) cam.m_LookAt = obstacleHolder;
     }
 
     public GameObject getRandomPos()
     {
-        return positions[Random.Range(0, positions.Count)];
-    }
-
-    public GameObject getRandomPosNearPlayer()
-    {
-        for (int i = 0; i < positions.Count; i++)
-        {
-            //if (tileScripts[i].isContact)
-            {
-                return positions[i];
-            }
-        }
-
-        return null;
+        return positions[UnityEngine.Random.Range(0, positions.Count)];
     }
 }

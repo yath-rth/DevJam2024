@@ -46,22 +46,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Dash"",
+                    ""name"": ""TouchPos"",
                     ""type"": ""Value"",
-                    ""id"": ""3b11559b-44e4-4799-8667-8673e1a84997"",
-                    ""expectedControlType"": """",
+                    ""id"": ""c8b1ccc7-8d9d-42f9-a178-16f77ef3bc47"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Quick Dash"",
-                    ""type"": ""Button"",
-                    ""id"": ""6251f84f-b1a7-48ec-be79-5e5de12d7df3"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -143,26 +134,37 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""8577240e-2997-4692-a8b3-cfb6012c5cf3"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Hold(duration=2,pressPoint=0.01)"",
+                    ""name"": ""Touch"",
+                    ""id"": ""afe4ad92-27d0-4324-8d37-280bd7838ed4"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Dash"",
-                    ""isComposite"": false,
+                    ""action"": ""TouchPos"",
+                    ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""3a9d4c34-1361-4e59-8488-399b03eab4b6"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": ""Press(pressPoint=0.01)"",
+                    ""name"": ""modifier"",
+                    ""id"": ""7142a3a4-b739-4009-925b-6d11f8c97353"",
+                    ""path"": ""<Touchscreen>/touch0/press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Quick Dash"",
+                    ""action"": ""TouchPos"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""183fed71-aee7-454f-b864-ded10a9bc4de"",
+                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TouchPos"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -173,8 +175,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
         m_Gameplay_Rotation = m_Gameplay.FindAction("Rotation", throwIfNotFound: true);
-        m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
-        m_Gameplay_QuickDash = m_Gameplay.FindAction("Quick Dash", throwIfNotFound: true);
+        m_Gameplay_TouchPos = m_Gameplay.FindAction("TouchPos", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -238,16 +239,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
     private readonly InputAction m_Gameplay_Movement;
     private readonly InputAction m_Gameplay_Rotation;
-    private readonly InputAction m_Gameplay_Dash;
-    private readonly InputAction m_Gameplay_QuickDash;
+    private readonly InputAction m_Gameplay_TouchPos;
     public struct GameplayActions
     {
         private @PlayerInputActions m_Wrapper;
         public GameplayActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
         public InputAction @Rotation => m_Wrapper.m_Gameplay_Rotation;
-        public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
-        public InputAction @QuickDash => m_Wrapper.m_Gameplay_QuickDash;
+        public InputAction @TouchPos => m_Wrapper.m_Gameplay_TouchPos;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -263,12 +262,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Rotation.started += instance.OnRotation;
             @Rotation.performed += instance.OnRotation;
             @Rotation.canceled += instance.OnRotation;
-            @Dash.started += instance.OnDash;
-            @Dash.performed += instance.OnDash;
-            @Dash.canceled += instance.OnDash;
-            @QuickDash.started += instance.OnQuickDash;
-            @QuickDash.performed += instance.OnQuickDash;
-            @QuickDash.canceled += instance.OnQuickDash;
+            @TouchPos.started += instance.OnTouchPos;
+            @TouchPos.performed += instance.OnTouchPos;
+            @TouchPos.canceled += instance.OnTouchPos;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -279,12 +275,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Rotation.started -= instance.OnRotation;
             @Rotation.performed -= instance.OnRotation;
             @Rotation.canceled -= instance.OnRotation;
-            @Dash.started -= instance.OnDash;
-            @Dash.performed -= instance.OnDash;
-            @Dash.canceled -= instance.OnDash;
-            @QuickDash.started -= instance.OnQuickDash;
-            @QuickDash.performed -= instance.OnQuickDash;
-            @QuickDash.canceled -= instance.OnQuickDash;
+            @TouchPos.started -= instance.OnTouchPos;
+            @TouchPos.performed -= instance.OnTouchPos;
+            @TouchPos.canceled -= instance.OnTouchPos;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -306,7 +299,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnRotation(InputAction.CallbackContext context);
-        void OnDash(InputAction.CallbackContext context);
-        void OnQuickDash(InputAction.CallbackContext context);
+        void OnTouchPos(InputAction.CallbackContext context);
     }
 }

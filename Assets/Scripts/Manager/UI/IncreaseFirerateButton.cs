@@ -5,13 +5,16 @@ using UnityEngine;
 public class IncreaseFirerateButton : MonoBehaviour
 {
     public int cost;
+    public bool upgraded;
 
     public void Increase()
     {
-        if (stepCounter.instance.steps >= cost)
+        if (stepCounter.instance.steps >= cost && upgraded == false)
         {
             Player.instance.GetComponent<dumbellGun>().timeBtwShot -= 0.2f;
-            stepCounter.instance.temp_steps += cost;
+            PlayerPrefs.SetFloat("firerate", Player.instance.GetComponent<dumbellGun>().timeBtwShot);
+            stepCounter.instance.setSteps(cost);
+            upgraded = true;
         }
     }
 }

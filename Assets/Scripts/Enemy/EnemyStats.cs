@@ -59,16 +59,9 @@ public class EnemyStats : MonoBehaviour, IStats
         IsDead = true;
         if (Ragdolltoggle != null) Ragdolltoggle.ToggleRagDoll(true);
         if (DeathEffect != null) DeathEffect.SetActive(true);
-        StartCoroutine(DieNextPart());
-        Destroy(this.gameObject);
-    }
-
-    IEnumerator DieNextPart()
-    {
         GameObject particle = Instantiate(DeathEffect);
         particle.transform.position = transform.position;
-        yield return new WaitForSeconds(1);
-        Destroy(particle);
+        Destroy(this.gameObject);
     }
 
     void OnTriggerEnter(Collider other)

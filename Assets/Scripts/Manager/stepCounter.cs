@@ -28,7 +28,7 @@ public class stepCounter : MonoBehaviour
 
         temp_steps = PlayerPrefs.GetInt("Steps");
         steps = AndroidStepCounter.current.stepCounter.ReadValue() - temp_steps;
-        if(steps < 0) steps *= -1;
+        if (steps < 0) steps *= -1;
     }
 
 
@@ -41,8 +41,14 @@ public class stepCounter : MonoBehaviour
             text2.text = steps.ToString();
 
             steps = AndroidStepCounter.current.stepCounter.ReadValue() - temp_steps;
-            if(steps < 0) steps *= -1;
+            if (steps < 0) steps *= -1;
         }
+    }
+
+    public void setSteps(int offset)
+    {
+        temp_steps += offset;
+        if (AndroidStepCounter.current != null) steps = AndroidStepCounter.current.stepCounter.ReadValue() - temp_steps;
     }
 
     void OnApplicationQuit()
