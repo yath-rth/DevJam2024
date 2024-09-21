@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
         if (!playerStats.IsDead)
         {
             move = new Vector3(movementWSAD.normalized.x, 0, movementWSAD.normalized.z);
-            if (move.magnitude != null)
+            if (move.magnitude != 0)
             {
                 temp = transform.position + move;
             }
@@ -56,18 +56,12 @@ public class PlayerMovement : MonoBehaviour
 
             if (am != null)
             {
-                //am.SetFloat("horizontal", movementWSAD.x);
                 am.SetFloat("vertical", movementWSAD.normalized.magnitude);
-
-                if (inputActions.Gameplay.Dash.ReadValue<float>() > 0 && movementWSAD.magnitude > 0)
-                {
-                    am.SetLayerWeight(2, 1);
-                }
-                else
-                {
-                    am.SetLayerWeight(2, 0);
-                }
             }
+        }
+        else
+        {
+            if(am != null) am.SetFloat("vertical", 0);
         }
     }
 

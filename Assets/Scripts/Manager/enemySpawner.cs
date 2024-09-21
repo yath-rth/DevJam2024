@@ -14,21 +14,24 @@ public class enemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (timeRn < Time.time)
+        if(!Player.instance.GetPlayerStats().IsDead)
         {
-            if (waveCount > 0)
+            if (timeRn < Time.time)
             {
-                spawn();
-                waveCount--;
-            }
-            else
-            {
-                waveNumber++;
-                currWaveCount = waveNumber * waveMultiplier;
-                waveCount = currWaveCount;
-            }
+                if (waveCount > 0)
+                {
+                    spawn();
+                    waveCount--;
+                }
+                else
+                {
+                    waveNumber++;
+                    currWaveCount = waveNumber * waveMultiplier;
+                    waveCount = currWaveCount;
+                }
 
-            timeRn = Time.time + timeBtwSpawns;
+                timeRn = Time.time + timeBtwSpawns;
+            }
         }
     }
 

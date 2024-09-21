@@ -7,36 +7,39 @@ public class dumbellGun : MonoBehaviour
     [SerializeField] FieldOfView fov;
     [SerializeField] Transform spawn_point;
     GameObject dumbell_obj;
-    [SerializeField, Range(0f, 5f)] float timeBtwShot;
-    [SerializeField, Range(0f,1f)] float TimeToDespawn = .5f;
+    [Range(0f, 5f)] public float timeBtwShot;
+    [SerializeField, Range(0f, 1f)] float TimeToDespawn = .5f;
     [SerializeField, Range(0f, 100f)] float speed;
     float timeRn;
     Vector3 pos;
 
     private void Update()
     {
-        if (timeRn < Time.time)
+        if (!Player.instance.GetPlayerStats().IsDead)
         {
-            if (fov.closestTarget != null)
+            if (timeRn < Time.time)
             {
-                pos = fov.closestTarget.position;
-                pos.y = spawn_point.position.y;
+                if (fov.closestTarget != null)
+                {
+                    pos = fov.closestTarget.position;
+                    pos.y = spawn_point.position.y;
+                }
+                else
+                {
+                    pos = spawn_point.parent.transform.forward;
+                }
+
+                spawn_point.LookAt(pos);
+
+                dumbell_obj = ObjectPooler.pool.GetObject(0);
+                dumbell_obj.transform.position = spawn_point.position;
+                dumbell_obj.transform.rotation = spawn_point.parent.rotation;
+
+                dumbell_obj.GetComponent<Rigidbody>().AddForce(spawn_point.forward * speed, ForceMode.Impulse);
+                StartCoroutine(dumbell_obj.GetComponent<poolObject>().despawn(TimeToDespawn));
+
+                timeRn = Time.time + timeBtwShot;
             }
-            else
-            {
-                pos = spawn_point.parent.transform.forward;
-            }
-
-            spawn_point.LookAt(pos);
-
-            dumbell_obj = ObjectPooler.pool.GetObject(0);
-            dumbell_obj.transform.position = spawn_point.position;
-            dumbell_obj.transform.rotation = spawn_point.parent.rotation;
-
-            dumbell_obj.GetComponent<Rigidbody>().AddForce(spawn_point.forward * speed, ForceMode.Impulse);
-            StartCoroutine(dumbell_obj.GetComponent<poolObject>().despawn(TimeToDespawn));
-
-            timeRn = Time.time + timeBtwShot;
         }
     }
 }

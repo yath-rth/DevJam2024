@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>Player Prefs Lite</title>
+
+	<link href="PPLite_files/css.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="PPLite_files/prettify.css">
+	<script src="PPLite_files/jquery.txt"></script>
+	<link rel="stylesheet" href="PPLite_files/style.css">
+	<link rel="stylesheet" href="PPLite_files/gif.css">
+	<script type="text/javascript" src="PPLite_files/site.txt"></script>
+	<script type="text/javascript" src="PPLite_files/gif.txt" defer="defer"></script>
+</head>
+<body onload="PR.prettyPrint()">
+	<header class="header">
+		<span class="center">Player Prefs Lite Version V.1.0.0</span>
+	</header>
+	<div class="navigation">
+		<nav>
+			<ul>
+<li><a href="#sectionA"><span class="label">Introduction</span></a>
+</li>
+<li><a href="#sectionB"><span class="label">Quick Start</span></a>
+</li>
+<li><a href="#sectionC"><span class="label">PlayerPrefs</span></a>
+
+<ul>
+<li><a href="#sectionCA"><span class="label">Overview</span></a>
+</li>
+<li><a href="#sectionCB"><span class="label">Methods</span></a>
+
+<ul>
+<li><a href="#sectionCBA"><span class="label">AutoSave</span></a>
+</li>
+<li><a href="#sectionCBB"><span class="label">Delete</span></a>
+</li>
+<li><a href="#sectionCBC"><span class="label">DeleteAll</span></a>
+</li>
+<li><a href="#sectionCBD"><span class="label">Get</span></a>
+</li>
+<li><a href="#sectionCBE"><span class="label">HasKey</span></a>
+</li>
+<li><a href="#sectionCBF"><span class="label">Save</span></a>
+</li>
+<li><a href="#sectionCBG"><span class="label">Set</span></a>
+</li>
+</ul></li>
+</ul></li>
+<li><a href="#sectionD"><span class="label">Supported Datatypes</span></a>
+
+<ul>
+<li><a href="#sectionDA"><span class="label">C# Data types</span></a>
+</li>
+<li><a href="#sectionDB"><span class="label">Unity Data types</span></a>
+</li>
+</ul></li>
+<li><a href="#sectionE"><span class="label">Additional Information</span></a>
+
+<ul>
+<li><a href="#sectionEA"><span class="label">Support</span></a>
+</li>
+<li><a href="#sectionEB"><span class="label">Change Requests</span></a>
+</li>
+<li><a href="#sectionEC"><span class="label">Upgrading to ScriptableObject Pro</span></a>
+</li>
+</ul></li>
+			</ul>
+			<br><br><br>
+		</nav>
+	</div>
+	<div class="navigation2">
+		<nav>
+			<ul>
+			</ul>
+			<br><br><br>
+		</nav>
+	</div>
+	<div class="fsm" id="mainContent"><div id="fsm_actual" style="position: absolute;"></div></div>
+
+<div class="content" id="sectionA" style="">
+	<h2>Introduction</h2>
+	<section>
+		<p>
+			Player Prefs Lite is a drop in replacement for the Unity Player Prefs
+ system. Whilst it is 100% compatible with Unity's system it greatly 
+increases the <a href="#sectionD">data types</a> that can be used.
+<br>
+
+<br>
+Please refer to the section <a href="#sectionB">Quick Start</a> to quickly upgrade an existing script from Unity PlayerPrefs to PlayerPrefs Lite.
+<br>
+
+<br>
+PlayerPrefs Lite was developed using the technology from 
+ScriptableObject Pro and is designed to fulfil one specifc function. 
+This product is designed to handle small amounts of simple data quckly 
+and efficiently if your data is large or more complex then 
+ScriptableObject Pro is likely to be a better fit for your project.
+<br>
+
+<br>
+This version of the utility was written in C# with Unity .Net 4.7.1 
+libraries and tested using Unity 2020.3 and 2021.3  for Standalone, 
+WebGL, Android and IOS but should function on all platforms supported by
+ Unity.
+<br>
+Whilst every effort has been made to ensure the compatibility of 
+PlayerPrefs Lite with all Unity versions, the correct functioning of the
+ software with Unity Alpha, Beta or Technical releases cannot be 
+guaranteed.
+<br>
+
+<br>
+The code that makes up this utility is copyright SteveSmith.SoftWare 
+2022. Unless specifically stated in the code file or this documentation,
+ no part of the system may be copied or modified. Neither may it be 
+stored in such a way that would make it available to the public outside 
+of the Unity Asset Store.
+<br>
+
+<br>
+This documentation is available online at https://stevesmith.software. 
+You will also find there the form for filing a bug report should it be 
+necessary.
+<br>
+
+<br>
+Steve Smith 2022.<br>
+		</p>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionEC">&lt;- Previous</a>
+	<a href="#sectionB">Next -&gt;</a>
+	</p><br><br>
+</div>
+<div class="content" id="sectionB" style="display: none;">
+	<h2>Quick Start</h2>
+	<section>
+		<p>
+			<b>Unity Player Prefs</b>
+<br>
+
+<br>
+</p><p></p><pre style="width:100%"><code class="prettyprint prettyprinted" style=""><span class="pln">
+</span><span class="kwd">using</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">MyClass</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">MonoBehaviour</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+	</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> points </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+
+	</span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Start</span><span class="pln"> </span><span class="pun">()</span><span class="pln">
+	</span><span class="pun">{</span><span class="pln">
+		points </span><span class="pun">=</span><span class="pln"> </span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">GetInt</span><span class="pun">(</span><span class="str">"points"</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">);</span><span class="pln">
+	</span><span class="pun">}</span><span class="pln">
+
+	</span><span class="kwd">void</span><span class="pln"> </span><span class="typ">OnTriggerEnter</span><span class="pun">(</span><span class="typ">Collider</span><span class="pln"> other</span><span class="pun">)</span><span class="pln"> 
+	</span><span class="pun">{</span><span class="pln">
+		points </span><span class="pun">++;</span><span class="pln">
+		</span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">SetInt</span><span class="pun">(</span><span class="str">"points"</span><span class="pun">,</span><span class="pln"> points</span><span class="pun">);</span><span class="pln">
+	</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+<p></p>
+<br>
+<b>Player Prefs Lite</b>
+<br>
+
+<br>
+<p></p><pre style="width:100%"><code class="prettyprint prettyprinted" style=""><span class="pln">
+</span><span class="kwd">using</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">using</span><span class="pln"> </span><span class="typ">PlayerPrefs</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="typ">SSSoftware</span><span class="pun">.</span><span class="typ">PlayerPrefsLite</span><span class="pun">.</span><span class="typ">PlayerPrefs</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">MyClass</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">MonoBehaviour</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+	</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> points </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+
+	</span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Start</span><span class="pln"> </span><span class="pun">()</span><span class="pln">
+	</span><span class="pun">{</span><span class="pln">
+		points </span><span class="pun">=</span><span class="pln"> </span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">GetInt</span><span class="pun">(</span><span class="str">"points"</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">);</span><span class="pln">
+	</span><span class="pun">}</span><span class="pln">
+
+	</span><span class="kwd">void</span><span class="pln"> </span><span class="typ">OnTriggerEnter</span><span class="pun">(</span><span class="typ">Collider</span><span class="pln"> other</span><span class="pun">)</span><span class="pln"> 
+	</span><span class="pun">{</span><span class="pln">
+		points </span><span class="pun">++;</span><span class="pln">
+		</span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">SetInt</span><span class="pun">(</span><span class="str">"points"</span><span class="pun">,</span><span class="pln"> points</span><span class="pun">);</span><span class="pln">
+	</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<br>
+Add a using statement
+<br>
+<p></p><pre style="width:100%"><code class="prettyprint prettyprinted" style=""><span class="pln">
+</span><span class="kwd">using</span><span class="pln"> </span><span class="typ">PlayerPrefs</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="typ">SSSoftware</span><span class="pun">.</span><span class="typ">PlayerPrefsLite</span><span class="pun">.</span><span class="typ">PlayerPrefs</span><span class="pun">;</span></code></pre>
+Your code will now use the Player Prefs Lite system.
+<br>
+<p></p>
+<br>
+<b>No further code changes are required</b>
+		<p></p>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionA">&lt;- Previous</a>
+	<a href="#sectionC">Next -&gt;</a>
+	</p><br><br>
+</div>
+<div class="content" id="sectionC" style="display: none;">
+	<h2>PlayerPrefs</h2>
+	<section>
+		<p>
+			The Player Prefs Lite PlayerPrefs class is a static class that is 
+ready to use once the following line has been added to a script
+<br>
+</p><p></p><pre style="width:100%"><code class="prettyprint prettyprinted" style=""><span class="pln">
+</span><span class="kwd">using</span><span class="pln"> </span><span class="typ">PlayerPrefs</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="typ">SSSoftware</span><span class="pun">.</span><span class="typ">PlayerPrefsLite</span><span class="pun">.</span><span class="typ">PlayerPrefs</span><span class="pun">;</span></code></pre>
+
+<br>
+Your code will now use the Player Prefs Lite system and the full range of Player Prefs Lite <a href="#sectionD">data types</a>  will be available to use exactly as if the original player prefs was still in use.
+<br>
+<p></p>
+<br>
+<br>
+		<p></p>
+<div class="subcontent" id="sectionCA" style="display: none;">
+	<span class="label1">Overview</span>
+	<section>
+		<p>
+			The Player Prefs Lite system is driven by 2 backing files.
+<br>
+
+<br>
+The first is a Unity ScriptableObject which can be found in the 
+PlayerPrefsLite/Resources folder and the contents can be viewed via the 
+Inspector.
+<br>
+Note: Should this file be deleted a new one can be created via the Asset-&gt;Create menu.
+<br>
+
+<br>
+The second is a ScriptableObjectPro file which is created at runtime to 
+store preference changes, this file will persist across builds in the 
+Unity Editor and at runtime but is NOT included in the build of your 
+game. This means that preference values set in the Unity Editor will NOT
+ be in a build.
+<br>
+
+<br>
+If you require data to be carried over from the Unity Editor into a build then please refer to ScriptableObject Pro.<br>
+		</p>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionC">&lt;- Previous</a>
+	<a href="#sectionCB">Next -&gt;</a>
+	</p><br><br>
+</div>
+<div class="subcontent" id="sectionCB" style="display: none;">
+	<span class="label1">Methods</span>
+	<section>
+		<p>
+			The following are the public methods which can be called by user code to control the functioning of Player Prefs Lite. <br>
+		</p>
+<div class="subcontent" id="sectionCBA" style="display: none;">
+	<span class="label1">AutoSave</span>
+	<section>
+		<p>
+			</p><table>
+                <tbody><tr><td><br></td></tr>
+                <tr>
+                    <td>void</td>
+                    <td colspan="2"><b>AutoSave</b>(bool save, float interval)</td>
+                </tr>
+                  <tr><td><br></td></tr>
+              <tr>
+                    <td></td>
+                    <td><i>Description</i></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">By default the preference values  
+will be saved automatically when the application quits or looses focus. A
+ call to AutoSave(false) will disable this behaviour and it is then the 
+responsibility of user code to call <a href="#Main\ScriptableObject\Methods\Save$">Save</a> to save the preferences.<br>
+Calling AutoSave(true) will restore the default behaviour and calling AutoSave(true,30f) will start a timed save.
+</td>
+                </tr><tr><td><br></td></tr>
+                
+                <tr>
+                    <td></td>
+                    <td><i>Parameters</i></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>bool save</td>
+                    <td>true - turn autosave on. false - turn autosave off</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>float interval</td>
+                    <td>Automatically save the preference values. Interval is a number of seconds to wait between saves</td>
+                </tr>
+                <tr><td><br></td></tr>
+                <tr>
+                    <td></td>
+                    <td><i>Return values</i></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>none</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr><td><br></td></tr>
+                <tr>
+                    <td></td>
+                    <td><i>Example</i></td>
+                </tr>
+                <tr>
+                    <td></td>
+
+                    <td colspan="2">
+ <p></p><pre style="width:100%"><code class="prettyprint prettyprinted" style=""><span class="pln">
+</span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">AutoSave</span><span class="pun">(</span><span class="kwd">false</span><span class="pun">);</span><span class="pln"> </span><span class="com">// Disable the default save behaviour</span><span class="pln">
+
+</span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">AutoSave</span><span class="pun">(</span><span class="kwd">true</span><span class="pun">);</span><span class="pln"> </span><span class="com">// Enable the default save behaviour</span><span class="pln">
+
+</span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">AutoSave</span><span class="pun">(</span><span class="kwd">true</span><span class="pun">,</span><span class="pln"> </span><span class="lit">30f</span><span class="pun">);</span><span class="pln"> </span><span class="com">// Enable the default save behaviour and save the preferences every 30 seconds</span></code></pre>
+<p></p>                   </td>
+                </tr>
+</tbody></table>
+<br>
+		<p></p>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionCB">&lt;- Previous</a>
+	<a href="#sectionCBB">Next -&gt;</a>
+	</p><br><br>
+</div>
+<div class="subcontent" id="sectionCBB" style="display: none;">
+	<span class="label1">Delete</span>
+	<section>
+		<p>
+			</p><table>
+	<tbody><tr><td><br></td></tr>
+	<tr>
+		<td>void</td>
+		<td colspan="2"><b>Delete</b>(string key)</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Description</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="2">Delete a preference</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Parameters</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>string key</td>
+		<td>The name of the preference to delete</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Return values</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>none</td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Example</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="2">
+			<p>
+				</p><pre style="width:100%"><code class="prettyprint prettyprinted" style=""><span class="pln">
+</span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">Delete</span><span class="pun">(</span><span class="str">"myPref"</span><span class="pun">);</span><span class="pln"> </span><span class="com">// Delete the 'myPref' preference</span></code></pre>
+			<p></p>
+		</td>
+	</tr>
+</tbody></table>
+<br>
+		<p></p>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionCBA">&lt;- Previous</a>
+	<a href="#sectionCBC">Next -&gt;</a>
+	</p><br><br>
+</div>
+<div class="subcontent" id="sectionCBC" style="display: none;">
+	<span class="label1">DeleteAll</span>
+	<section>
+		<p>
+			</p><table>
+	<tbody><tr><td><br></td></tr>
+	<tr>
+		<td>void</td>
+		<td colspan="2"><b>DeleteAll</b>()</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Description</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="2">Delete all of the preference values</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Parameters</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>none</td>
+		<td></td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Return values</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>none</td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Example</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="2">
+			<p>
+				</p><pre style="width:100%"><code class="prettyprint prettyprinted" style=""><span class="pln">
+</span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">DeleteAll</span><span class="pun">();</span><span class="pln"> </span><span class="com">// Deletes all preference values			</span></code></pre>
+<p></p>
+		</td>
+	</tr>
+</tbody></table>
+<br>
+		<p></p>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionCBB">&lt;- Previous</a>
+	<a href="#sectionCBD">Next -&gt;</a>
+	</p><br><br>
+</div>
+<div class="subcontent" id="sectionCBD" style="display: none;">
+	<span class="label1">Get</span>
+	<section>
+		<p>
+			</p><table>
+	<tbody><tr><td><br></td></tr>
+	<tr>
+		<td>T</td>
+		<td colspan="2"><b>Get&lt;T&gt;</b>(string key, T defaultValue)</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Description</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="2">Returns the preference value specified by key if that 
+key exists. If the key does not exist it returns the defaultValue either
+ supplied or for that data type.</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Parameters</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>string key</td>
+		<td>The name of the preference to retrieve</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>T defaultValue</td>
+		<td>Optional. The value to return if no preference is found. If no 
+defalut is supplied then the default value for the type is returned 
+where T is any of the supported data types</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Return values</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>T</td>
+		<td>The preference value or default value as Type T  where T is any of the supported data types</td>
+		<td></td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Example</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="2">
+			<p>
+				</p><pre style="width:100%"><code class="prettyprint prettyprinted" style=""><span class="pln">
+</span><span class="kwd">int</span><span class="pln"> score </span><span class="pun">=</span><span class="pln"> </span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">Get</span><span class="str">&lt;int&gt;</span><span class="pun">(</span><span class="str">"score"</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">int</span><span class="pln"> damage </span><span class="pun">=</span><span class="pln"> </span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">Get</span><span class="pun">(</span><span class="str">"damage"</span><span class="pun">,</span><span class="lit">10</span><span class="pun">);</span></code></pre>
+
+Returns the preference value for 'score' or 'damage' if they exist.<br>
+if 'score' has no value then 0 (the default value for type int) is returned<br>
+if 'damage' has no value then 10 will be returned.<br>
+<br>
+Note: Because no default value has been supplied for 'score' we must specify the return type using &lt;int&gt;<br>
+Each of the data types has a corresponding specific Get method to avoid this<br>
+<br>
+				<pre style="width:100%"><code class="prettyprint prettyprinted" style=""><span class="pln">
+</span><span class="kwd">int</span><span class="pln"> score </span><span class="pun">=</span><span class="pln"> </span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">Get</span><span class="str">&lt;int&gt;</span><span class="pun">(</span><span class="str">"score"</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">int</span><span class="pln"> score </span><span class="pun">=</span><span class="pln"> </span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">GetInt</span><span class="pun">(</span><span class="str">"score"</span><span class="pun">);</span></code></pre>
+
+These 2 calls are equivalent
+			<p></p>
+		</td>
+	</tr>
+</tbody></table>
+
+<br>
+<table>
+	<tbody><tr><td><br></td></tr>
+	<tr>
+		<td>bool</td>
+		<td colspan="2"><b>Get&lt;T&gt;</b>(string key, out T value, T defaultValue)</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Description</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="2">This Get method returns the preference or default 
+value into the variable specified by the out parameter and reports 
+whether the preference or the default has been used</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Parameters</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>string key</td>
+		<td>the name of the preference to retrieve</td>
+	</tr>
+		<tr><td></td>
+		<td>out T value</td>
+		<td>The variable in which to return the value  where T is any of the supported data types</td>
+	</tr>
+		<tr><td></td>
+		<td>T defaultValue</td>
+		<td>Optional. The default value to return if no preference is found. 
+If no default value is supplied the default value for Type T is used  
+where T is any of the supported data types</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Return values</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>true</td>
+		<td>The value in the out variable is a preference value</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>false</td>
+		<td>The value in the out variable is the default value</td>
+		<td></td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Example</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="2">
+			<p>
+				</p><pre style="width:100%"><code class="prettyprint prettyprinted" style=""><span class="pln">
+</span><span class="kwd">int</span><span class="pln"> score</span><span class="pun">=</span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">Get</span><span class="pun">(</span><span class="str">"score"</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">out</span><span class="pln"> score</span><span class="pun">))</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+</span><span class="com">// The 'score' preference was found</span><span class="pln">
+</span><span class="com">// The variable score contains the value</span><span class="pln">
+</span><span class="pun">}</span><span class="pln"> 
+</span><span class="kwd">else</span><span class="pln"> 
+</span><span class="pun">{</span><span class="pln">
+</span><span class="com">// The 'score' preference was NOT found</span><span class="pln">
+</span><span class="com">// The variable score contains 0</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+			<p></p>
+		</td>
+	</tr>
+</tbody></table>
+<br>
+		<p></p>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionCBC">&lt;- Previous</a>
+	<a href="#sectionCBE">Next -&gt;</a>
+	</p><br><br>
+</div>
+<div class="subcontent" id="sectionCBE" style="display: none;">
+	<span class="label1">HasKey</span>
+	<section>
+		<p>
+			</p><table>
+	<tbody><tr><td><br></td></tr>
+	<tr>
+		<td>bool</td>
+		<td colspan="2"><b>HasKey</b>(string key)</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Description</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="2">Checks if a preference with the name specified by key exists in the preferences</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Parameters</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>string key</td>
+		<td>The name of the preference to check</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Return values</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>true</td>
+		<td>The preference exists</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>false</td>
+		<td>The preference does NOT exist</td>
+		<td></td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Example</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="2">
+			<p>
+				</p><pre style="width:100%"><code class="prettyprint prettyprinted" style=""><span class="pln">
+</span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">HasKey</span><span class="pun">(</span><span class="str">"myPref"</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+   </span><span class="com">// Preference exists</span><span class="pln">
+</span><span class="pun">}</span><span class="pln"> </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+   </span><span class="com">// Preference does not exist</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+			<p></p>
+		</td>
+	</tr>
+</tbody></table>
+<br>
+		<p></p>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionCBD">&lt;- Previous</a>
+	<a href="#sectionCBF">Next -&gt;</a>
+	</p><br><br>
+</div>
+<div class="subcontent" id="sectionCBF" style="display: none;">
+	<span class="label1">Save</span>
+	<section>
+		<p>
+			</p><table>
+	<tbody><tr><td><br></td></tr>
+	<tr>
+		<td>void</td>
+		<td colspan="2"><b>Save</b>()</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Description</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="2">This method will Save the current preference values.<br>
+If AutoSave(false) has been used then this method MUST be called in order to save the preferences.
+</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Parameters</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>none</td>
+		<td></td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Return values</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>none</td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Example</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="2">
+			<p>
+</p><pre style="width:100%"><code class="prettyprint prettyprinted" style=""><span class="pln">
+	 </span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">Save</span><span class="pun">();</span><span class="pln"> </span><span class="com">// Save the current preference values</span></code></pre>
+			<p></p>
+		</td>
+	</tr>
+</tbody></table>
+<br>
+		<p></p>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionCBE">&lt;- Previous</a>
+	<a href="#sectionCBG">Next -&gt;</a>
+	</p><br><br>
+</div>
+<div class="subcontent" id="sectionCBG" style="display: none;">
+	<span class="label1">Set</span>
+	<section>
+		<p>
+			</p><table>
+	<tbody><tr><td><br></td></tr>
+	<tr>
+		<td>void</td>
+		<td colspan="2"><b>Set</b>(string key, T value)</td>
+	</tr>
+	<tr>
+		<td>void</td>
+		<td colspan="2"><b>Set<i>DataType</i></b>(string key, T value)</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Description</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="2">Sets a preference value for the specified key. if the Set<i>DataType</i> method is used <i>DataType</i> should be replaced with a supported data type. See Example Below.</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Parameters</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>string key</td>
+		<td>The name of the preference to set</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>T value</td>
+		<td>The value for the preference where T is one of the supported data types</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Return values</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>none</td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td></td>
+		<td><i>Example</i></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="2">
+			<p>
+				</p><pre style="width:100%"><code class="prettyprint prettyprinted" style=""><span class="pln">
+</span><span class="kwd">int</span><span class="pln"> score </span><span class="pun">=</span><span class="pln"> </span><span class="lit">100</span><span class="pun">;</span><span class="pln">
+
+</span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">Set</span><span class="pun">(</span><span class="str">"score"</span><span class="pun">,</span><span class="pln"> score</span><span class="pun">);</span><span class="pln">
+
+</span><span class="typ">PlayerPrefs</span><span class="pun">.</span><span class="typ">SetInt</span><span class="pun">(</span><span class="str">"score"</span><span class="pun">,</span><span class="pln"> score</span><span class="pun">);</span></code></pre>
+Sets the preference 'score' to the value held in the score variable.<br>
+Note: these 2 calls are equivalent.<br>
+The Set<i>DataType</i> methods are included to maintain compatibility with Unity PlayerPrefs but should, generally, not need to be used.
+			<p></p>
+		</td>
+	</tr>
+</tbody></table>
+<br>
+		<p></p>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionCBF">&lt;- Previous</a>
+	<a href="#sectionD">Next -&gt;</a>
+	</p><br><br>
+</div>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionCA">&lt;- Previous</a>
+	<a href="#sectionCBA">Next -&gt;</a>
+	</p><br><br>
+</div>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionB">&lt;- Previous</a>
+	<a href="#sectionCA">Next -&gt;</a>
+	</p><br><br>
+</div>
+<div class="content" id="sectionD" style="display: none;">
+	<h2>Supported Datatypes</h2>
+	<section>
+		<p>
+			Player Prefs Lite supports many more C# and Unity data types than are available via Unity PlayerPrefs
+<br>
+<br>
+		</p>
+<div class="subcontent" id="sectionDA" style="display: none;">
+	<span class="label1">C# Data types</span>
+	<section>
+		<p>
+			The following C# data types are supported by Player Prefs Lite
+<br>
+
+<br>
+<b>Primitive Data Types</b>
+<br>
+
+<br>
+byte
+<br>
+sbyte
+<br>
+char
+<br>
+ushort
+<br>
+short
+<br>
+uint
+<br>
+int
+<br>
+ulong
+<br>
+long
+<br>
+decimal
+<br>
+float
+<br>
+double
+<br>
+string
+<br>
+
+<br>
+<b>C# Classes</b>
+<br>
+
+<br>
+DateTime
+<br>
+TimeSpan
+<br>
+
+<br>
+<b>Arrays</b>
+<br>
+T[]; where T is a C# primitive type
+<br>
+
+<br>
+To have these data types extended please refer to <a href="#sectionEB">Change Requests</a>
+		</p>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionD">&lt;- Previous</a>
+	<a href="#sectionDB">Next -&gt;</a>
+	</p><br><br>
+</div>
+<div class="subcontent" id="sectionDB" style="display: none;">
+	<span class="label1">Unity Data types</span>
+	<section>
+		<p>
+			The following Unity data types are supported by Player Prefs Lite
+<br>
+
+<br>
+Vector2
+<br>
+Vector2Int
+<br>
+Vector3
+<br>
+Vector3Int
+<br>
+Vector4
+<br>
+Quaternion
+<br>
+Color
+<br>
+Color32
+<br>
+Rect
+<br>
+Rectint
+<br>
+
+<br>
+The utility also supports
+<br>
+
+<br>
+<b>Arrays</b>
+<br>
+T[] where T is one of the above.
+<br>
+
+<br>
+To have these data types extended please refer to <a href="#sectionEB">Change Requests</a>
+<br>
+
+<br>
+<br>
+		</p>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionDA">&lt;- Previous</a>
+	<a href="#sectionE">Next -&gt;</a>
+	</p><br><br>
+</div>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionCBG">&lt;- Previous</a>
+	<a href="#sectionDA">Next -&gt;</a>
+	</p><br><br>
+</div>
+<div class="content" id="sectionE" style="display: none;">
+	<h2>Additional Information</h2>
+	<section>
+		<p>
+			
+		</p>
+<div class="subcontent" id="sectionEA" style="display: none;">
+	<span class="label1">Support</span>
+	<section>
+		<p>
+			Support can only be offered to users using Unity LTS versions
+<br>
+
+<br>
+Please contact SteveSmith.Software via one of the following channels
+<br>
+
+<br>
+To file a Bug Report: <a href="https://stevesmith.software/">SteveSmith.Software</a> Choose the Contact tab and login as guest
+<br>
+
+<br>
+Email: <a href="mailto:pplite@stevesmith.software">PPLite@SteveSmith.Software</a>
+<br>
+
+<br>
+Discord: Join our discord channel at <a href="https://discord.gg/pNegxNr">SteveSmith.Software on discord</a>
+		</p>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionE">&lt;- Previous</a>
+	<a href="#sectionEB">Next -&gt;</a>
+	</p><br><br>
+</div>
+<div class="subcontent" id="sectionEB" style="display: none;">
+	<span class="label1">Change Requests</span>
+	<section>
+		<p>
+			Any request for additional data type implementation or support will be taken under consideration
+<br>
+
+<br>
+Please email <a href="mailto:pplite@stevesmith.software">PPLite@SteveSmith.Software</a> with your request<br>
+		</p>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionEA">&lt;- Previous</a>
+	<a href="#sectionEC">Next -&gt;</a>
+	</p><br><br>
+</div>
+<div class="subcontent" id="sectionEC" style="display: none;">
+	<span class="label1">Upgrading to ScriptableObject Pro</span>
+	<section>
+		<p>
+			Player Prefs Lite has been built on top of the ScriptableObject Pro 
+code base. This means that both Player Prefs Lite and ScriptableObject 
+Pro cannot be present in the same Unity Project.
+<br>
+
+<br>
+Before Upgrading to ScriptableObject Pro from Player Prefs Lite you must delete the PlayerPrefsLite folder from your project
+<br>
+
+<br>
+ScriptableObject Pro contains a copy of the Player Prefs Lite 
+functionality so you will not lose Player Prefs Lite by doing this.<br>
+		</p>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionEB">&lt;- Previous</a>
+	<a href="#sectionA">Next -&gt;</a>
+	</p><br><br>
+</div>
+	</section>
+	<p style="text-align:right">
+	<a href="#sectionDB">&lt;- Previous</a>
+	<a href="#sectionEA">Next -&gt;</a>
+	</p><br><br>
+</div>
+
+	<footer class="footer"><b>© SteveSmith.Software</b> 2018. All Rights Reserved.</footer>
+
+
+
+</body></html>

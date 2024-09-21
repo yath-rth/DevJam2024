@@ -107,12 +107,11 @@ public class mapSpawner : MonoBehaviour
                 {
                     Vector3 tilePosition = CoordToPosition(x, y);
                     GameObject newTile = Instantiate(spawner, tilePosition, tile[random_index].transform.rotation);
-                    newTile.transform.eulerAngles = new Vector3(newTile.transform.rotation.x, rotations[Random.Range(0, 4)], newTile.transform.rotation.z);
 
                     spawnPos.Add(newTile);
 
                     newTile.transform.parent = mapHolder;
-                    newTile.transform.localScale = new Vector3(1 * (1 - outlinePercent) * -tileSize, (1 - outlinePercent) * tileSize * obstacleHeight, 1 * (1 - outlinePercent) * -tileSize);
+                    newTile.transform.localScale = new Vector3(1 * (1 - outlinePercent) * -tileSize, (1 - outlinePercent) * tileSize * tileHeight, 1 * (1 - outlinePercent) * -tileSize);
 
                     //tileScripts.Add(newTile.GetComponent<Tile>());
 
@@ -132,7 +131,7 @@ public class mapSpawner : MonoBehaviour
                         spawnPos.Add(newTile);
 
                         newTile.transform.parent = mapHolder;
-                        newTile.transform.localScale = new Vector3(1 * (1 - outlinePercent) * -tileSize, (1 - outlinePercent) * tileSize * obstacleHeight, 1 * (1 - outlinePercent) * -tileSize);
+                        newTile.transform.localScale = new Vector3(1 * (1 - outlinePercent) * -tileSize, (1 - outlinePercent) * tileSize * tileHeight, 1 * (1 - outlinePercent) * -tileSize);
 
                         //tileScripts.Add(newTile.GetComponent<Tile>());
 
@@ -146,6 +145,7 @@ public class mapSpawner : MonoBehaviour
                     {
                         Vector3 tilePosition = CoordToPosition(x, y);
                         GameObject newTile = Instantiate(tile[random_index], tilePosition, tile[random_index].transform.rotation);
+                        newTile.transform.eulerAngles = new Vector3(newTile.transform.rotation.x, rotations[Random.Range(0, 4)], newTile.transform.rotation.z);
 
                         positions.Add(newTile);
 

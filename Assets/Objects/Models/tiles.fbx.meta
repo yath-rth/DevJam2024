@@ -49,6 +49,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: 9 BROWN-DARKEST.001
     second: {fileID: 2100000, guid: 3b20fc9e84b968641b7312bdcdd1ffd8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tiles
+    second: {fileID: 2100000, guid: 4ea6c78d7199a7744ae82bb094ff2e6e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

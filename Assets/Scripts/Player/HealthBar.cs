@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [DefaultExecutionOrder(1)]
 public class HealthBar : MonoBehaviour
 {
     PlayerStats player;
-    GameObject[] healthBars;
+    Image[] healthBars;
     int count, gap, num;
     float colourPercent;
 
@@ -15,12 +16,12 @@ public class HealthBar : MonoBehaviour
     private void Start()
     {
         player = Player.instance.GetComponent<PlayerStats>();
-        healthBars = new GameObject[transform.childCount];
+        healthBars = new Image[transform.childCount];
 
         for (int i = 0; i < transform.childCount; i++)
         {
-            healthBars[i] = transform.GetChild(i).gameObject;
-            healthBars[i].SetActive(true);
+            healthBars[i] = transform.GetChild(i).gameObject.GetComponent<Image>();
+            healthBars[i].gameObject.SetActive(true);
         }
 
         num = healthBars.Length;
@@ -36,22 +37,19 @@ public class HealthBar : MonoBehaviour
 
             for (int i = 0; i < count; i++)
             {
-                if(i < num) healthBars[i].SetActive(false);
+                if(i < num) healthBars[i].gameObject.SetActive(false);
             }
 
             for (int i = num - 1; i >= count; i--)
             {
-                if(i < num && i > -1) healthBars[i].SetActive(true);
+                if(i < num && i > -1) healthBars[i].gameObject.SetActive(true);
             }
         }
 
         for (int i = 0; i < healthBars.Length; i++)
         {
-            Renderer render = healthBars[i].GetComponent<Renderer>();
-            Material obstacleMaterial = new Material(render.sharedMaterial);
             colourPercent = (5 - count) / num;
-            obstacleMaterial.color = Color.Lerp(Red, Color.white, colourPercent);
-            render.sharedMaterial = obstacleMaterial;
+            healthBars[i].color = Color.Lerp(Red, Color.white, colourPercent);
         }
     }
 }
