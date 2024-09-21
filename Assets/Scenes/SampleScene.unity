@@ -7992,7 +7992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c5ad643c8376f446b6f977461aa5a4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 30
+  cost: 1500
 --- !u!1 &233474165
 GameObject:
   m_ObjectHideFlags: 0
@@ -25226,7 +25226,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Change Color
 
-    20'
+    1000'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -42573,6 +42573,7 @@ MonoBehaviour:
   text1: {fileID: 1573196713}
   text2: {fileID: 974075271}
   steps: 0
+  temp_steps: 0
 --- !u!1 &1312618211
 GameObject:
   m_ObjectHideFlags: 0
@@ -49910,7 +49911,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1573196712
 RectTransform:
   m_ObjectHideFlags: 0
@@ -64483,7 +64484,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Increase Firerate
 
-    30'
+    1500'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

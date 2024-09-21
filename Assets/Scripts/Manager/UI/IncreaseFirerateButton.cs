@@ -11,7 +11,7 @@ public class IncreaseFirerateButton : MonoBehaviour
         if (stepCounter.instance.steps >= cost)
         {
             Player.instance.GetComponent<dumbellGun>().timeBtwShot -= 0.2f;
-            stepCounter.instance.steps -= cost;
+            stepCounter.instance.temp_steps += cost;
         }
     }
 }

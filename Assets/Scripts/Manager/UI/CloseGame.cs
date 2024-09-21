@@ -7,7 +7,7 @@ public class CloseGame : MonoBehaviour
 {
     public void close()
     {
-        PlayerPrefs.SetInt("Steps", AndroidStepCounter.current.stepCounter.ReadValue() + stepCounter.instance.steps);
+        PlayerPrefs.SetInt("Steps", stepCounter.instance.temp_steps);
         Application.Quit();
     }
 }

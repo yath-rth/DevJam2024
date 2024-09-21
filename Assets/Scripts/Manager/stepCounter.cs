@@ -11,7 +11,7 @@ public class stepCounter : MonoBehaviour
 
     [SerializeField] TMP_Text text, text1, text2;
     public int steps;
-    int temp_steps;
+    public int temp_steps;
 
     private void Awake()
     {
@@ -27,6 +27,8 @@ public class stepCounter : MonoBehaviour
         AndroidStepCounter.current.MakeCurrent();
 
         temp_steps = PlayerPrefs.GetInt("Steps");
+        steps = AndroidStepCounter.current.stepCounter.ReadValue() - temp_steps;
+        if(steps < 0) steps *= -1;
     }
 
 
@@ -38,26 +40,13 @@ public class stepCounter : MonoBehaviour
             text1.text = PlayerPrefs.GetInt("Steps").ToString();
             text2.text = steps.ToString();
 
-            if (temp_steps != AndroidStepCounter.current.stepCounter.ReadValue())
-            {
-                steps = steps + AndroidStepCounter.current.stepCounter.ReadValue() - temp_steps;
-                temp_steps = AndroidStepCounter.current.stepCounter.ReadValue();
-            }
-
-            //steps -= AndroidStepCounter.current.stepCounter.ReadValue();
-            //steps = -steps;
+            steps = AndroidStepCounter.current.stepCounter.ReadValue() - temp_steps;
+            if(steps < 0) steps *= -1;
         }
     }
 
-    private void OnApplicationPause(bool focusStatus)
+    void OnApplicationQuit()
     {
-        if (focusStatus)
-        {
-            if (AndroidStepCounter.current != null)
-            {
-                PlayerPrefs.SetFloat("Steps", AndroidStepCounter.current.stepCounter.ReadValue());
-            }
-            InputSystem.DisableDevice(AndroidStepCounter.current);
-        }
+        InputSystem.DisableDevice(AndroidStepCounter.current);
     }
 }
