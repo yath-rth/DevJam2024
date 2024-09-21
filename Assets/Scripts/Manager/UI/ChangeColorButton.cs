@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class ChangeColorButton : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    changeTshirt changeShirt;
+    [SerializeField] int color_index, cost;
+
+    private void Awake()
     {
-        
+        changeShirt = Player.instance.GetComponent<changeTshirt>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void change()
     {
-        
+        if (stepCounter.instance.steps >= cost)
+        {
+            changeShirt.change(color_index);
+            stepCounter.instance.temp_steps += cost;
+        }
     }
 }
