@@ -7,8 +7,9 @@ public class dumbellGun : MonoBehaviour
     [SerializeField] FieldOfView fov;
     [SerializeField] Transform spawn_point;
     GameObject dumbell_obj;
-    [Range(0f, 5f)] public float timeBtwShot;
-    [Range(0f, 100f)] public float speed;
+    [SerializeField, Range(0f, 5f)] float timeBtwShot;
+    [SerializeField, Range(0f,1f)] float TimeToDespawn = .5f;
+    [SerializeField, Range(0f, 100f)] float speed;
     float timeRn;
     Vector3 pos;
 
@@ -33,7 +34,7 @@ public class dumbellGun : MonoBehaviour
             dumbell_obj.transform.rotation = spawn_point.parent.rotation;
 
             dumbell_obj.GetComponent<Rigidbody>().AddForce(spawn_point.forward * speed, ForceMode.Impulse);
-            StartCoroutine(dumbell_obj.GetComponent<poolObject>().despawn());
+            StartCoroutine(dumbell_obj.GetComponent<poolObject>().despawn(TimeToDespawn));
 
             timeRn = Time.time + timeBtwShot;
         }

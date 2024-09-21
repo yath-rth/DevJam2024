@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4082731977898058231}
   - component: {fileID: 864496078213704854}
   - component: {fileID: 3299979568690044920}
+  - component: {fileID: 1353931121141233238}
+  - component: {fileID: 5850343713091953980}
   m_Layer: 0
   m_Name: Donuts
   m_TagString: Untagged
@@ -89,3 +91,40 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &1353931121141233238
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8468791719902097746}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.94400007, y: 0.57900006, z: 0.90900004}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.679, y: 0.53800005, z: 0.48900002}
+  m_TimeToStationary: 0.5
+--- !u!65 &5850343713091953980
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8468791719902097746}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.8877892, y: 1.1571448, z: 1.8181591}
+  m_Center: {x: 0.6793256, y: 0.5382154, z: 0.48935986}

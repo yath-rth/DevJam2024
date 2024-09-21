@@ -16,8 +16,6 @@ public class EnemyStats : MonoBehaviour, IStats
     public GameObject DeathEffect;
     public int AddScoreAmt;
 
-    [SerializeField] LayerMask dumbellLayer;
-
     public delegate void onEnemyDeath(int addScoreamt);
     public static event onEnemyDeath OnEnemyDeath;
 
@@ -49,10 +47,7 @@ public class EnemyStats : MonoBehaviour, IStats
     public void TakeDamage(float Damage)
     {
         Health -= Damage;
-        if (NavMesh.SamplePosition(transform.position + direction, out NavMeshHit hit, 5, _enemy.pathFinder.areaMask))
-        {
-            _enemy.pathFinder.velocity = hit.position;
-        }
+        Debug.Log(this.name + " has been damaged");
     }
 
     public void Die()
@@ -65,19 +60,22 @@ public class EnemyStats : MonoBehaviour, IStats
         if (Ragdolltoggle != null) Ragdolltoggle.ToggleRagDoll(true);
         if (DeathEffect != null) DeathEffect.SetActive(true);
         StartCoroutine(DieNextPart());
+        Destroy(this.gameObject);
     }
 
     IEnumerator DieNextPart()
     {
-        yield return new WaitForSeconds(3);
-        Destroy(this.gameObject);
+        GameObject particle = Instantiate(DeathEffect);
+        particle.transform.position = transform.position;
+        yield return new WaitForSeconds(1);
+        Destroy(particle);
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == dumbellLayer)
+        if (other.gameObject.layer == 8)
         {
-            TakeDamage(10);
+            TakeDamage(10f);
         }
     }
 }

@@ -5,9 +5,8 @@ using UnityEngine;
 public class poolObject : MonoBehaviour
 {
     [SerializeField] int obj_index;
-    [SerializeField, Range(0f,1f)] float TimeToDespawn = .5f;
 
-    public IEnumerator despawn()
+    public IEnumerator despawn(float TimeToDespawn)
     {
         yield return new WaitForSeconds(TimeToDespawn);
         if (GetComponent<Rigidbody>() != null)
