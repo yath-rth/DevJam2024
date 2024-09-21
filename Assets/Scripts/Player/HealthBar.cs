@@ -46,10 +46,10 @@ public class HealthBar : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < healthBars.Length; i++)
-        {
-            colourPercent = (5 - count) / num;
-            healthBars[i].color = Color.Lerp(Red, Color.white, colourPercent);
-        }
+        // for (int i = 0; i < healthBars.Length; i++)
+        // {
+        //     colourPercent = (5 - count) / num;
+        //     healthBars[i].color = Color.Lerp(Red, Color.white, colourPercent);
+        // }
     }
 }

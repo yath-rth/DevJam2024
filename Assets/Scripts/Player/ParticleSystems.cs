@@ -15,10 +15,14 @@ public class ParticleSystems : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(playerMovement.movementWSAD.magnitude);
         if (Math.Abs(playerMovement.movementWSAD.magnitude) > 0.1)
         {
+            particles[0].gameObject.SetActive(true);
             particles[0].transform.rotation = transform.rotation * Quaternion.Euler(0, 0, 0);
+        }
+        else
+        {
+            particles[0].gameObject.SetActive(false);
         }
     }
 }

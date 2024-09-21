@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class OpenandCloseButton : MonoBehaviour
 {
-    public GameObject item;
+    public GameObject itemOpen;
+    public GameObject itemClose;
 
     public void Open()
     {
-        item.SetActive(true);
+        itemOpen.SetActive(true);
+        itemClose.SetActive(false);
         Time.timeScale = 0;
     }
 
     public void Close()
     {
-        item.SetActive(false);
+        itemOpen.SetActive(true);
+        itemClose.SetActive(false);
         Time.timeScale = 1;
     }
 }

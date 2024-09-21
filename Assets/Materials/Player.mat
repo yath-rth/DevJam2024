@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Main Mat
+  m_Name: Player
   m_Shader: {fileID: -6465566751694194690, guid: 676efa80647978f49bdabffd26e80154,
     type: 3}
   m_Parent: {fileID: 0}
@@ -90,7 +90,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Amt_Of_Outline: 2
+    - Amt_Of_Outline: 0.66
     - Boolean_714642564b4c4034959f65008ce119c6: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0

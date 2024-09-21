@@ -14,7 +14,8 @@ public class mapSpawner : MonoBehaviour
     Vector2 mapsize;
     Vector2 Maxmapsize = new Vector2(12, 12);
     public List<GameObject> tile = new List<GameObject>();
-    [SerializeField] GameObject spawner, spawner_corner, coll;
+    [SerializeField] List<GameObject> spawner = new List<GameObject>();
+    [SerializeField] GameObject spawner_corner, coll;
     [Range(0, 50)]
     public int maxSizeX, maxSizeY, minSizeX, minSizeY;
     [Range(-5, 5)]
@@ -114,7 +115,7 @@ public class mapSpawner : MonoBehaviour
                     }
                     else
                     {
-                        newTile = Instantiate(spawner, tilePosition, tile[random_index].transform.rotation);
+                        newTile = Instantiate(spawner[UnityEngine.Random.Range(0, spawner.Count)], tilePosition, tile[random_index].transform.rotation);
                     }
                     newTile.transform.eulerAngles = new Vector3(0, -90, 0);
 
@@ -133,7 +134,7 @@ public class mapSpawner : MonoBehaviour
                     }
                     else
                     {
-                        newTile = Instantiate(spawner, tilePosition, tile[random_index].transform.rotation);
+                        newTile = Instantiate(spawner[UnityEngine.Random.Range(0, spawner.Count)], tilePosition, tile[random_index].transform.rotation);
                         newTile.transform.eulerAngles = new Vector3(0, 90, 0);
                     }
 
@@ -148,7 +149,7 @@ public class mapSpawner : MonoBehaviour
                     if (y == mapsize.y - 1 && spawner != null)
                     {
                         Vector3 tilePosition = CoordToPosition(x, y);
-                        newTile = Instantiate(spawner, tilePosition, tile[random_index].transform.rotation);
+                        newTile = Instantiate(spawner[UnityEngine.Random.Range(0, spawner.Count)], tilePosition, tile[random_index].transform.rotation);
 
                         spawnPos.Add(newTile);
 

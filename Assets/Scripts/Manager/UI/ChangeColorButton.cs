@@ -21,5 +21,7 @@ public class ChangeColorButton : MonoBehaviour
             stepCounter.instance.setSteps(cost);
             upgraded = true;
         }
+
+        if(upgraded) changeShirt.change(color_index);
     }
 }

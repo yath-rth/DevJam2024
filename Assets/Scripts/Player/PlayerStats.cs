@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using DG;
+using DG.Tweening;
 
 public class PlayerStats : MonoBehaviour, IStats
 {
@@ -8,6 +11,7 @@ public class PlayerStats : MonoBehaviour, IStats
     public bool IsDead { get; set; }
 
     float damagedhealth;
+    [SerializeField] Transform damageUI;
 
     void Start()
     {
@@ -19,11 +23,11 @@ public class PlayerStats : MonoBehaviour, IStats
 
     public void CheckHealth()
     {
-        if(Health > MaxHealth)
+        if (Health > MaxHealth)
         {
             Health = MaxHealth;
         }
-        else if(Health <= 0)
+        else if (Health <= 0)
         {
             Die();
         }
@@ -31,7 +35,9 @@ public class PlayerStats : MonoBehaviour, IStats
 
     public void TakeDamage(float Damage)
     {
+        Debug.Log("Damage Taken");
         damagedhealth = Health - Damage;
+        if(damageUI!=null) damageUI.DOPunchScale(Vector3.one, 0.5f, 0, 1);
     }
 
     public void Die()
