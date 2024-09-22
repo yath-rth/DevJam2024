@@ -22,7 +22,7 @@ public class ObjectPooler : MonoBehaviour
         if (pool != null) Destroy(pool.gameObject);
 
         pool = this;
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
 
         for (int i = 0; i < items.Count; i++)
         {

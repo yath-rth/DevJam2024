@@ -11,7 +11,8 @@ public class PlayerStats : MonoBehaviour, IStats
     public bool IsDead { get; set; }
 
     float damagedhealth;
-    [SerializeField] Transform damageUI;
+    [SerializeField] Image damageUI;
+    [SerializeField] Transform deathScreen;
 
     void Start()
     {
@@ -35,14 +36,21 @@ public class PlayerStats : MonoBehaviour, IStats
 
     public void TakeDamage(float Damage)
     {
-        Debug.Log("Damage Taken");
         damagedhealth = Health - Damage;
-        if(damageUI!=null) damageUI.DOPunchScale(Vector3.one, 0.5f, 0, 1);
+        if (damageUI != null)
+        {
+            damageUI.DOFade(.25f, 0.05f).OnComplete(() =>
+            {
+                damageUI.DOFade(0, 0.05f);
+            });
+        }
     }
 
     public void Die()
     {
         IsDead = true;
+        deathScreen.gameObject.SetActive(true);
+        Time.timeScale = 0;
     }
 
     void Update()

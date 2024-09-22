@@ -9,15 +9,22 @@ public class OpenandCloseButton : MonoBehaviour
 
     public void Open()
     {
-        itemOpen.SetActive(true);
-        itemClose.SetActive(false);
+        if(itemOpen != null)itemOpen.SetActive(true);
+        if(itemClose != null)itemClose.SetActive(false);
         Time.timeScale = 0;
     }
 
     public void Close()
     {
-        itemOpen.SetActive(true);
-        itemClose.SetActive(false);
+        if(itemOpen != null) itemOpen.SetActive(true);
+        if(itemClose != null)itemClose.SetActive(false);
         Time.timeScale = 1;
+    }
+
+    public void middle()
+    {
+        if(itemOpen != null)itemOpen.SetActive(true);
+        if(itemClose != null)itemClose.SetActive(false);
+        Time.timeScale = 0;
     }
 }

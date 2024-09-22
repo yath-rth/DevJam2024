@@ -55,6 +55,7 @@ public class stepCounter : MonoBehaviour
     {
         temp_steps += offset;
         if (AndroidStepCounter.current != null) steps = AndroidStepCounter.current.stepCounter.ReadValue() - temp_steps;
+        PlayerPrefs.SetInt("Steps", stepCounter.instance.temp_steps);
     }
 
     void OnApplicationQuit()

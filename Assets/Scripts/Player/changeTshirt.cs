@@ -15,5 +15,6 @@ public class changeTshirt : MonoBehaviour
     public void change(int index)
     {
         shirtRender.material = mats[index];
+        PlayerPrefs.SetInt("colorIndex", index);
     }
 }

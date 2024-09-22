@@ -14,7 +14,8 @@ public class dumbellGun : MonoBehaviour
     float timeRn;
     Vector3 pos;
 
-    private void Awake() {
+    private void Awake()
+    {
         timeBtwShot = PlayerPrefs.GetFloat("firerate", TimeBtwShot);
     }
 
@@ -22,17 +23,10 @@ public class dumbellGun : MonoBehaviour
     {
         if (!Player.instance.GetPlayerStats().IsDead)
         {
-            if (timeRn < Time.time)
+            if (timeRn < Time.time && fov.closestTarget != null)
             {
-                if (fov.closestTarget != null)
-                {
-                    pos = fov.closestTarget.position;
-                    pos.y = spawn_point.position.y;
-                }
-                else
-                {
-                    pos = spawn_point.transform.forward;
-                }
+                pos = fov.closestTarget.position;
+                pos.y = spawn_point.position.y;
 
                 spawn_point.LookAt(pos);
 

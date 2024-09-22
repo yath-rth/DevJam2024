@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(-1)]
 public class Player : MonoBehaviour
 {
     public static Player instance;
@@ -12,6 +13,8 @@ public class Player : MonoBehaviour
     /// </summary>
     void Awake()
     {
+        Time.timeScale = 1;
+
         if (instance != null){ Destroy(this.gameObject);}
         instance = this;
 

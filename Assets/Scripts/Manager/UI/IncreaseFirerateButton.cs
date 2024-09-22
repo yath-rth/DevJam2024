@@ -10,7 +10,7 @@ public class IncreaseFirerateButton : MonoBehaviour
 
     public void Increase()
     {
-        if (stepCounter.instance.steps >= cost && upgraded == false)
+        if (stepCounter.instance.steps >= cost && Player.instance.GetComponent<dumbellGun>().timeBtwShot > 0.2f)
         {
             Player.instance.GetComponent<dumbellGun>().timeBtwShot -= 0.1f;
             Player.instance.GetComponent<dumbellGun>().timeBtwShot = Math.Clamp(Player.instance.GetComponent<dumbellGun>().timeBtwShot, 0.2f, 2f);
