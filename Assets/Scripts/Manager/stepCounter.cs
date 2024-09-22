@@ -43,6 +43,12 @@ public class stepCounter : MonoBehaviour
             steps = AndroidStepCounter.current.stepCounter.ReadValue() - temp_steps;
             if (steps < 0) steps *= -1;
         }
+        else
+        {
+            text2.text = steps.ToString();
+
+            steps = 10000 - temp_steps;
+        }
     }
 
     public void setSteps(int offset)
